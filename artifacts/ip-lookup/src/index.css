@@ -1,0 +1,84 @@
+@import "leaflet/dist/leaflet.css";
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card-border: hsl(var(--card));
+  --color-popover-border: hsl(var(--popover));
+  --color-primary-border: hsl(var(--primary));
+  --color-secondary-border: hsl(var(--secondary));
+  --color-muted-border: hsl(var(--muted));
+  --color-accent-border: hsl(var(--accent));
+  --color-destructive-border: hsl(var(--destructive));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  color-scheme: dark;
+  --background: 247 60% 12%;
+  --foreground: 0 0% 100%;
+  --card: 247 60% 12%;
+  --card-foreground: 0 0% 100%;
+  --popover: 247 60% 12%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 163 80% 46%;
+  --primary-foreground: 247 60% 12%;
+  --secondary: 247 50% 18%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 247 50% 18%;
+  --muted-foreground: 240 20% 70%;
+  --accent: 163 80% 46%;
+  --accent-foreground: 247 60% 12%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 247 40% 22%;
+  --input: 247 40% 22%;
+  --ring: 163 80% 46%;
+  --app-font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --app-font-mono: 'Courier New', monospace;
+  --radius: 0.375rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased;
+    background-color: #1a1040;
+    color: white;
+    min-height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cdefs%3E%3Cpattern id='p' width='80' height='80' patternUnits='userSpaceOnUse'%3E%3Crect width='80' height='80' fill='none'/%3E%3Cline x1='0' y1='40' x2='30' y2='40' stroke='rgba(150,120,255,0.15)' stroke-width='1'/%3E%3Cline x1='50' y1='40' x2='80' y2='40' stroke='rgba(150,120,255,0.15)' stroke-width='1'/%3E%3Cline x1='40' y1='0' x2='40' y2='30' stroke='rgba(150,120,255,0.15)' stroke-width='1'/%3E%3Cline x1='40' y1='50' x2='40' y2='80' stroke='rgba(150,120,255,0.15)' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='2.5' fill='rgba(150,120,255,0.25)'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='rgba(150,120,255,0.15)'/%3E%3Ccircle cx='80' cy='0' r='1.5' fill='rgba(150,120,255,0.15)'/%3E%3Ccircle cx='0' cy='80' r='1.5' fill='rgba(150,120,255,0.15)'/%3E%3Ccircle cx='80' cy='80' r='1.5' fill='rgba(150,120,255,0.15)'/%3E%3Cline x1='0' y1='0' x2='20' y2='0' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='60' y1='0' x2='80' y2='0' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='0' y1='80' x2='20' y2='80' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='60' y1='80' x2='80' y2='80' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='20' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='80' y1='0' x2='80' y2='20' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='0' y1='60' x2='0' y2='80' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3Cline x1='80' y1='60' x2='80' y2='80' stroke='rgba(150,120,255,0.08)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='80' height='80' fill='url(%23p)'/%3E%3C/svg%3E");
+  }
+}
+
+.leaflet-container {
+  background: #e8e0d8;
+}

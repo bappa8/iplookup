@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: ip
+    description: IP lookup operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /ip/{address}:
+    get:
+      operationId: lookupIp
+      tags: [ip]
+      summary: Lookup IP address details
+      description: Returns geolocation and network details for the given IP address
+      parameters:
+        - name: address
+          in: path
+          required: true
+          schema:
+            type: string
+          description: IP address to look up (IPv4 or IPv6), or "me" for the caller's IP
+      responses:
+        "200":
+          description: IP details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IpInfo"
+        "400":
+          description: Invalid IP address
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "404":
+          description: IP not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Upstream lookup failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    IpSecurity:
+      type: object
+      properties:
+        is_vpn:
+          type: ["boolean", "null"]
+        is_proxy:
+          type: ["boolean", "null"]
+        is_datacenter:
+          type: ["boolean", "null"]
+        is_tor:
+          type: ["boolean", "null"]
+        threat_level:
+          type: ["string", "null"]
+          description: "none, low, medium, high"
+    IpConnection:
+      type: object
+      properties:
+        asn:
+          type: ["integer", "null"]
+        org:
+          type: ["string", "null"]
+        isp:
+          type: ["string", "null"]
+        domain:
+          type: ["string", "null"]
+    IpInfo:
+      type: object
+      properties:
+        ip:
+          type: string
+        type:
+          type: ["string", "null"]
+          description: "ipv4 or ipv6"
+        continent:
+          type: ["string", "null"]
+        continent_code:
+          type: ["string", "null"]
+        country:
+          type: ["string", "null"]
+        country_code:
+          type: ["string", "null"]
+        region:
+          type: ["string", "null"]
+        region_code:
+          type: ["string", "null"]
+        city:
+          type: ["string", "null"]
+        latitude:
+          type: ["number", "null"]
+        longitude:
+          type: ["number", "null"]
+        is_eu:
+          type: ["boolean", "null"]
+        postal:
+          type: ["string", "null"]
+        calling_code:
+          type: ["string", "null"]
+        capital:
+          type: ["string", "null"]
+        flag_emoji:
+          type: ["string", "null"]
+        flag_img:
+          type: ["string", "null"]
+        timezone:
+          type: ["string", "null"]
+        connection:
+          $ref: "#/components/schemas/IpConnection"
+        security:
+          $ref: "#/components/schemas/IpSecurity"
+      required:
+        - ip
